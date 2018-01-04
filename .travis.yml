@@ -6,5 +6,5 @@ python:
   - "3.6"
 install:
   - pip install -r requirements.txt
-test:
+script:
   - python test_driver.py
