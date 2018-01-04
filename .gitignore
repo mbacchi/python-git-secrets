@@ -9,3 +9,5 @@
 
 # PyPi rc file
 .pypirc
+
+.idea/
