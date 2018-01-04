@@ -1,6 +1,8 @@
 # Python Git Secrets
 > A pure Python library providing [git-secrets](https://github.com/awslabs/git-secrets) functionality.
 
+[![Build Status][travis-image]][travis-url]
+
 We don't plan to do everything that [git-secrets](https://github.com/awslabs/git-secrets) does
 (i.e. placing patterns in your .gitconfig file), but provide you with the building blocks for
 matching patterns you don't want exposed to the world via Github. This will allow you to run
@@ -48,3 +50,8 @@ Distributed under the BSD (Simplified) license. See ``LICENSE`` for more informa
 3. Commit your changes (`git commit -am 'Add some fooBar'`)
 4. Push to the branch (`git push origin feature/fooBar`)
 5. Create a new Pull Request
+
+
+<!-- Markdown link & img dfn's -->
+[travis-image]: https://travis-ci.org/mbacchi/python-git-secrets.svg?branch=master
+[travis-url]: https://travis-ci.org/mbacchi/python-git-secrets
