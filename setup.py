@@ -15,7 +15,7 @@ except(IOError, ImportError):
 
 setup(name="python-git-secrets",
       version=gitsecrets.__version__,
-      description="Python implementation of git-secrets(https://github.com/awslabs/git-secrets)",
+      description="Python implementation of git-secrets",
       long_description=long_description,
       url="https://github.com/mbacchi/python-git-secrets",
       author='Matt Bacchi',
