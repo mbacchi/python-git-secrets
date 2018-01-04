@@ -17,7 +17,7 @@ AWS credentials, they were marked invalid immediately after creating in the AWS 
 
 Run the `python-git-secrets.py` command to try it out:
 
-    (venv) [mbacchi@hostname python-git-secrets]$ python python-git-secrets.py --scan flask-quotes --repository https://github.com/mbacchi/flask-quotes --use_local_repo -r
+    (venv) [mbacchi@hostname python-git-secrets]$ python samples/python-git-secrets.py --scan flask-quotes --repository https://github.com/mbacchi/flask-quotes --use_local_repo -r
     Scanning flask-quotes recursively
     flask-quotes
     SCANNING: flask-quotes/app.py
