@@ -1,7 +1,9 @@
 import errno
 import os
 import unittest
+import random
 import re
+from string import ascii_uppercase, ascii_lowercase, digits
 
 from gitsecrets import GitSecrets
 
@@ -47,12 +49,15 @@ class TestGitSecrets(GSTestCase):
         self.assertIsNone(self.gs.scan_file('tests/data/plain.txt'))
 
     def test_aws_creds_access_key_id(self):
-        self.newfile('tests/tempdir/aws-credentials', "aws_access_key_id=AKIAISITMFSJISKWFAJQ")
+        key = ''.join(random.choice(ascii_uppercase) for x in range(20))
+        self.newfile('tests/tempdir/aws-credentials', "aws_access_key_id=" + key)
         self.assertTrue(self.gs.scan_file('tests/tempdir/aws-credentials'))
         self.cleanupfile('tests/tempdir/aws-credentials')
 
     def test_aws_creds_secret_access_key(self):
-        self.newfile('tests/tempdir/aws-credentials', "aws_secret_access_key=AqIjAxOLf0KPdlLnv5azQOERkTtWo87RvlMSb3Au")
+        chars = ascii_uppercase + ascii_lowercase + digits
+        key = ''.join(random.choice(chars) for x in range(40))
+        self.newfile('tests/tempdir/aws-credentials', "aws_secret_access_key=" + key)
         self.assertTrue(self.gs.scan_file('tests/tempdir/aws-credentials'))
         self.cleanupfile('tests/tempdir/aws-credentials')
 
