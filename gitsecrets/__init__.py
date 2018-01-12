@@ -22,8 +22,8 @@ class GitSecrets(object):
     secret_access_key_pattern = r'[0-9a-zA-Z]{40}'
     secret_access_key_regex = opt_quote + aws + under + secret + under + access + under + key + opt_quote + \
                               connect + opt_quote + secret_access_key_pattern + opt_quote
-    access_key_regex = opt_quote + aws + under + account + under + id + under + opt_quote + connect + opt_quote + \
-                       r'[0-9]{4}\-?[0-9]{4}\-?[0-9]{4}' + opt_quote
+    access_key_regex = opt_quote + aws + under + access + under + key + under + id + opt_quote + connect + opt_quote + \
+                       access_key_pattern + opt_quote
 
     default_patterns = [
         raw_access_key_pattern,         # AWS Access Key ID

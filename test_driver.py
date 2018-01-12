@@ -46,8 +46,15 @@ class TestGitSecrets(GSTestCase):
         # None is returned if a pattern match is not found
         self.assertIsNone(self.gs.scan_file('tests/data/plain.txt'))
 
-    def test_aws_creds_file(self):
-        self.assertTrue(self.gs.scan_file('tests/data/aws-credentials'))
+    def test_aws_creds_access_key_id(self):
+        self.newfile('tests/tempdir/aws-credentials', "aws_access_key_id=AKIAISITMFSJISKWFAJQ")
+        self.assertTrue(self.gs.scan_file('tests/tempdir/aws-credentials'))
+        self.cleanupfile('tests/tempdir/aws-credentials')
+
+    def test_aws_creds_secret_access_key(self):
+        self.newfile('tests/tempdir/aws-credentials', "aws_secret_access_key=AqIjAxOLf0KPdlLnv5azQOERkTtWo87RvlMSb3Au")
+        self.assertTrue(self.gs.scan_file('tests/tempdir/aws-credentials'))
+        self.cleanupfile('tests/tempdir/aws-credentials')
 
     def test_add_pattern(self):
         self.newfile('tests/tempdir/add.txt', "funky cold medina")
@@ -87,7 +94,8 @@ class TestAWSLabsGitSecrets(GSTestCase):
 def suite():
     suite = unittest.TestSuite()
     suite.addTest(TestGitSecrets('test_plain_text'))
-    suite.addTest(TestGitSecrets('test_aws_creds_file'))
+    suite.addTest(TestGitSecrets('test_aws_creds_access_key_id'))
+    suite.addTest(TestGitSecrets('test_aws_creds_secret_access_key'))
     suite.addTest(TestGitSecrets('test_add_pattern'))
     suite.addTest(TestAWSLabsGitSecrets('test_invalid_filename_fails'))
     suite.addTest(TestAWSLabsGitSecrets('test_no_prohibited_matches_exit_0'))
