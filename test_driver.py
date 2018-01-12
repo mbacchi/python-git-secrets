@@ -49,14 +49,14 @@ class TestGitSecrets(GSTestCase):
         self.assertIsNone(self.gs.scan_file('tests/data/plain.txt'))
 
     def test_aws_creds_access_key_id(self):
-        key = ''.join(random.choice(ascii_uppercase) for x in range(20))
+        key = ''.join(random.choice(ascii_uppercase) for _ in range(20))
         self.newfile('tests/tempdir/aws-credentials', "aws_access_key_id=" + key)
         self.assertTrue(self.gs.scan_file('tests/tempdir/aws-credentials'))
         self.cleanupfile('tests/tempdir/aws-credentials')
 
     def test_aws_creds_secret_access_key(self):
         chars = ascii_uppercase + ascii_lowercase + digits
-        key = ''.join(random.choice(chars) for x in range(40))
+        key = ''.join(random.choice(chars) for _ in range(40))
         self.newfile('tests/tempdir/aws-credentials', "aws_secret_access_key=" + key)
         self.assertTrue(self.gs.scan_file('tests/tempdir/aws-credentials'))
         self.cleanupfile('tests/tempdir/aws-credentials')
