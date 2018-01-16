@@ -46,7 +46,9 @@ class TestGitSecrets(GSTestCase):
 
     def test_plain_text(self):
         # None is returned if a pattern match is not found
-        self.assertIsNone(self.gs.scan_file('tests/data/plain.txt'))
+        self.newfile('tests/tempdir/plain.txt', "Plain text file")
+        self.assertIsNone(self.gs.scan_file('tests/tempdir/plain.txt'))
+        self.cleanupfile('tests/tempdir/plain.txt')
 
     def test_aws_creds_access_key_id(self):
         key = ''.join(random.choice(ascii_uppercase) for _ in range(20))

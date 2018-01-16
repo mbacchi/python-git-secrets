@@ -8,8 +8,10 @@ We don't plan to do everything that [git-secrets](https://github.com/awslabs/git
 matching patterns you don't want exposed to the world via Github. This will allow you to run
 the tool in an AWS Lambda function with no dependence on external binaries.
 
-Included in this repository are AWS credentials solely used for testing purposes. These are not valid
-AWS credentials, they were marked invalid immediately after creating in the AWS console.
+There are no longer AWS credentials in this repository (at one time there were
+inactive AWS credentials used for testing purposes.) Now testing is performed
+by generating AWS credential strings on the fly using the same pattern that AWS
+uses for their creds.
 
 ## Requirements
 
