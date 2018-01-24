@@ -39,6 +39,11 @@ To run tests, execute `test_driver.py` from the top level directory, you'll see 
     
     OK
 
+## TODO
+
+* create logging capabilities
+* enable verbose output
+
 ## Meta
 
 Matt Bacchi - mbacchi@gmail.com
