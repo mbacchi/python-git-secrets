@@ -3,6 +3,7 @@ import os
 import unittest
 import random
 import re
+import tarfile
 from string import ascii_uppercase, ascii_lowercase, digits
 
 from gitsecrets import GitSecrets
@@ -34,6 +35,23 @@ class GSTestCase(unittest.TestCase):
             self.newdir(dirpath)
         with open(path, "w") as f:
             f.write(content + '\n')
+
+    def newbinaryfile(self, path):
+        match = re.search('/', path)
+        if match:
+            dirpath = os.path.dirname(path)
+            self.newdir(dirpath)
+        with open(path, "wb") as f:
+            f.write(b"\x0a\x1b\x2c")
+            f.write(b"\x3d\x4e\x5f")
+
+    def newxzfile(self, path):
+        longstring = "The quick brown fox jumped over the lazy dog."
+        self.newfile(path, longstring + '\n' + longstring + '\n' +
+                        longstring + '\n' + longstring + '\n' + longstring
+                        + '\n' + longstring)
+        with tarfile.open(path + ".tar.xz", "w:xz") as tar:
+            tar.add(path, arcname=os.path.basename(path))
 
     def cleanupfile(self, path):
         os.remove(path)
@@ -68,6 +86,17 @@ class TestGitSecrets(GSTestCase):
         self.gs.add_pattern(r'.*cold.*')
         self.assertTrue(self.gs.scan_file('tests/tempdir/add.txt'))
         self.cleanupfile('tests/tempdir/add.txt')
+
+    def test_binary_file(self):
+        self.newbinaryfile('tests/tempdir/binfile.bin')
+        self.assertIsNone(self.gs.scan_file('tests/tempdir/binfile.bin'))
+        self.cleanupfile('tests/tempdir/binfile.bin')
+
+    def test_xz_file(self):
+        self.newxzfile('tests/tempdir/xzfile.txt')
+        self.assertIsNone(self.gs.scan_file('tests/tempdir/xzfile.txt.tar.xz'))
+        self.cleanupfile('tests/tempdir/xzfile.txt.tar.xz')
+        self.cleanupfile('tests/tempdir/xzfile.txt')
 
 class TestAWSLabsGitSecrets(GSTestCase):
     """
@@ -104,6 +133,8 @@ def suite():
     suite.addTest(TestGitSecrets('test_aws_creds_access_key_id'))
     suite.addTest(TestGitSecrets('test_aws_creds_secret_access_key'))
     suite.addTest(TestGitSecrets('test_add_pattern'))
+    suite.addTest(TestGitSecrets('test_binary_file'))
+    suite.addTest(TestGitSecrets('test_xz_file'))
     suite.addTest(TestAWSLabsGitSecrets('test_invalid_filename_fails'))
     suite.addTest(TestAWSLabsGitSecrets('test_no_prohibited_matches_exit_0'))
     return suite

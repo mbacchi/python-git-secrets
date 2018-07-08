@@ -67,26 +67,21 @@ def perform_scan():
 if __name__ == "__main__":
     args = do_args()
     if args.scan:
-        # create clone of repository
-        if not args.repository:
-            print("Missing mandatory --repository argument")
-            exit(1)
-        else:
-            if args.use_local_repo:
-                # verify local repo exists
-                repo = os.path.basename(args.repository)
-                if os.path.exists(repo):
-                    perform_scan()
-                else:
-                    print("Error: directory not found: {}".format(repo))
-                    exit(1)
+        if args.use_local_repo:
+            # verify local repo exists
+            repo = args.scan
+            if os.path.exists(repo):
+                perform_scan()
             else:
-                # clone the repo locally
-                repo = os.path.basename(args.repository)
-                nullstream = open(os.devnull, "w")
-                ourepo = porcelain.clone(args.repository, repo, errstream=Devnull())
-                if os.path.exists(repo):
-                    perform_scan()
-                else:
-                    print("Error: directory not found: {}".format(repo))
-                    exit(1)
+                print("Error: directory not found: {}".format(repo))
+                exit(1)
+        else:
+            # clone the repo locally
+            repo = os.path.basename(args.repository)
+            nullstream = open(os.devnull, "w")
+            ourepo = porcelain.clone(args.repository, repo, errstream=Devnull())
+            if os.path.exists(repo):
+                perform_scan()
+            else:
+                print("Error: directory not found: {}".format(repo))
+                exit(1)

@@ -10,4 +10,8 @@
 # PyPi rc file
 .pypirc
 
+# Pycharm
 .idea/
+
+# VSCode
+.vscode/

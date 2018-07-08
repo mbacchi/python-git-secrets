@@ -9,4 +9,4 @@ dist:
 
 # Tests require Python 3
 tests:
-	python test_driver.py
+	python3 test_driver.py

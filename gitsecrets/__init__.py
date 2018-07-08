@@ -41,13 +41,20 @@ class GitSecrets(object):
 
     def search_file(self, pattern, f):
         with open(f) as infile:
-            for i, line in enumerate(infile):
-                line = line.rstrip()
-                # print("searching for pattern: {} in line: {}".format(pattern, line))  # DEBUG
-                match = re.search(pattern, line)
-                if match:
-                    # print(match.group())  # DEBUG
-                    return True
+            try:
+                for i, line in enumerate(infile):
+                    line = line.rstrip()
+                    # print("searching for pattern: {} in line: {}".format(pattern, line))  # DEBUG
+                    match = re.search(pattern, line)
+                    if match:
+                        # print(match.group())  # DEBUG
+                        return True
+            except UnicodeDecodeError as e:
+                print("UnicodeDecodeError on file {}: {}".format(f, e))
+                pass
+            except:
+                print("Unexpected error:", sys.exc_info()[0])
+                raise
 
     def scan_file(self, path):
         for pattern in self.patterns:
