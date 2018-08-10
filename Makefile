@@ -10,3 +10,9 @@ dist:
 # Tests require Python 3
 tests:
 	python3 test_driver.py
+
+upload:
+    twine upload dist/*
+
+upload-test:
+    twine upload --repository-url https://test.pypi.org/legacy/ dist/*
