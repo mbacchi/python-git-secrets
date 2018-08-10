@@ -12,7 +12,7 @@ tests:
 	python3 test_driver.py
 
 upload:
-    twine upload dist/*
+	twine upload dist/*
 
 upload-test:
-    twine upload --repository-url https://test.pypi.org/legacy/ dist/*
+	twine upload --repository-url https://test.pypi.org/legacy/ dist/*
