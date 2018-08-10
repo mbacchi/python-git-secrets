@@ -58,10 +58,12 @@ def perform_scan():
         print("Scanning {} recursively".format(args.scan))
         if gs.scan_recursively(args.scan):
             print("Found verboten string in path {}".format(args.scan))
+            exit(1)
     else:
         print("Scanning {}".format(args.scan))
         if gs.scan_file(args.scan):
             print("Found verboten string in file {}".format(args.scan))
+            exit(1)
 
 
 if __name__ == "__main__":
