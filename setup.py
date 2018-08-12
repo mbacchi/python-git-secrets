@@ -5,18 +5,13 @@ except ImportError:
 
 import gitsecrets
 
-# borrowed conversion process from
-# https://stackoverflow.com/questions/26737222/pypi-description-markdown-doesnt-work
-try:
-    import pypandoc
-    long_description = pypandoc.convert('README.md', 'rst')
-except(IOError, ImportError):
-    long_description = open('README.md').read()
+long_description = open('README.md').read()
 
 setup(name="python-git-secrets",
       version=gitsecrets.__version__,
       description="Python implementation of git-secrets",
       long_description=long_description,
+      long_description_content_type="text/markdown",
       url="https://github.com/mbacchi/python-git-secrets",
       author='Matt Bacchi',
       author_email='mbacchi@gmail.com',
