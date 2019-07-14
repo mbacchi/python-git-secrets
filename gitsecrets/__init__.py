@@ -1,4 +1,4 @@
-__version__ = '0.1.1'
+__version__ = '0.1.2'
 
 import os
 import re
@@ -66,7 +66,6 @@ class GitSecrets(object):
     def scan_recursively(self, path):
         for root, dirs, files in os.walk(path):
             if "venv" not in root and '.git' not in root:
-                print(root)
                 for f in files:
                     # print("SCANNING: {}".format(root + '/' + f))  # DEBUG
                     if self.scan_file(root + '/' + f):
