@@ -68,11 +68,16 @@ class TestGitSecrets(GSTestCase):
         self.assertIsNone(self.gs.scan_file('tests/tempdir/plain.txt'))
         self.cleanupfile('tests/tempdir/plain.txt')
 
-    def test_aws_creds_access_key_id(self):
-        key = ''.join(random.choice(ascii_uppercase) for _ in range(20))
-        self.newfile('tests/tempdir/aws-credentials', "aws_access_key_id=" + key)
-        self.assertTrue(self.gs.scan_file('tests/tempdir/aws-credentials'))
-        self.cleanupfile('tests/tempdir/aws-credentials')
+    def test_new_aws_creds_access_key_id(self):
+        patterns = [''.join("A3T" + random.choice(ascii_uppercase)), 'AKIA',
+                    'AGPA', 'AIDA', 'AROA', 'AIPA', 'ANPA', 'ANVA', 'ASIA']
+        for item in patterns:
+            generated = ''.join(random.choice(ascii_uppercase) for _ in range(16))
+            key = ''.join(item + generated)
+            # print("testing pattern: \'{}\'".format(key))  # DEBUG
+            self.newfile('tests/tempdir/aws-credentials', "aws_access_key_id=" + key)
+            self.assertTrue(self.gs.scan_file('tests/tempdir/aws-credentials'))
+            self.cleanupfile('tests/tempdir/aws-credentials')
 
     def test_aws_creds_secret_access_key(self):
         chars = ascii_uppercase + ascii_lowercase + digits
@@ -130,7 +135,7 @@ class TestAWSLabsGitSecrets(GSTestCase):
 def suite():
     suite = unittest.TestSuite()
     suite.addTest(TestGitSecrets('test_plain_text'))
-    suite.addTest(TestGitSecrets('test_aws_creds_access_key_id'))
+    suite.addTest(TestGitSecrets('test_new_aws_creds_access_key_id'))
     suite.addTest(TestGitSecrets('test_aws_creds_secret_access_key'))
     suite.addTest(TestGitSecrets('test_add_pattern'))
     suite.addTest(TestGitSecrets('test_binary_file'))
