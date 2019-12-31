@@ -16,8 +16,10 @@ class GitSecrets(object):
     id = r'(ID|id|Id)'
     key = r'(KEY|key|Key)'
     under = r'_'
-    raw_access_key_pattern = r'^[A-Z0-9]{20}$'
-    access_key_pattern = r'[A-Z0-9]{20}'
+    # This pattern is more specific than the previous which would trigger false positives.
+    # Changed in git-secrets PR: https://github.com/awslabs/git-secrets/pull/89
+    raw_access_key_pattern = r'^(A3T[A-Z0-9]|AKIA|AGPA|AIDA|AROA|AIPA|ANPA|ANVA|ASIA)[A-Z0-9]{16}$'
+    access_key_pattern = r'(A3T[A-Z0-9]|AKIA|AGPA|AIDA|AROA|AIPA|ANPA|ANVA|ASIA)[A-Z0-9]{16}'
     raw_secret_access_key_pattern = r'^[0-9a-zA-Z]{40}$'
     secret_access_key_pattern = r'[0-9a-zA-Z]{40}'
     secret_access_key_regex = opt_quote + aws + under + secret + under + access + under + key + opt_quote + \
@@ -26,7 +28,7 @@ class GitSecrets(object):
                        access_key_pattern + opt_quote
 
     default_patterns = [
-        raw_access_key_pattern,         # AWS Access Key ID
+        raw_access_key_pattern,          # AWS Access Key ID
         raw_secret_access_key_pattern,   # AWS Secret Access Key
         access_key_regex,
         secret_access_key_regex
