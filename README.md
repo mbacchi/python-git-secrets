@@ -43,6 +43,7 @@ To run tests, execute `test_driver.py` from the top level directory, you'll see 
 
 * create logging capabilities
 * enable verbose output
+* support more git-secrets [tests](https://github.com/awslabs/git-secrets/blob/master/test/git-secrets.bats)
 
 ## Meta
 
